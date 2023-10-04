@@ -1,10 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export function useSearch(){
     const [search, updateSearch] = useState('')
     const [error, setError] = useState(null)
+    const isFirstSearch = useRef(true)
 
     useEffect(()=>{
+        if (isFirstSearch.current) {
+            isFirstSearch.current = search === ''
+            return
+        }
         if (search === '') {
             setError('Please introduce a movie name!')
             return
